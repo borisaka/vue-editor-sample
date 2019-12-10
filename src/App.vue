@@ -1,28 +1,47 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <vue-editor
+      :editorOptions="editorSettings"
+      v-model="content">
+    </vue-editor>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+  import { VueEditor, Quill } from 'vue2-editor'
+  import { ImageDrop } from 'quill-image-drop-module'
+  import ImageResize from 'quill-image-resize-vue'
+  import QuillBetterTable from 'quill-better-table'
+  //import quillTable from 'quill-table-module'
 
-export default {
-  name: 'app',
-  components: {
-    HelloWorld
+ /* Quill.register(quillTable.TableCell);
+  Quill.register(quillTable.TableRow);
+  Quill.register(quillTable.Table);
+  Quill.register(quillTable.Contain);
+  Quill.register('modules/table', quillTable.TableModule);*/
+
+//  Quill.register({
+//    'modules/better-table': QuillBetterTable
+// }, true)
+  Quill.register('modules/betterTable', QuillBetterTable)
+  Quill.register('modules/imageDrop', ImageDrop)
+  Quill.register('modules/imageResize', ImageResize)
+
+  export default {
+    components: {
+      VueEditor
+    },
+    data() {
+      return {
+        content: '<h1>Initial Content</h1>',
+        editorSettings: {
+          modules: {
+            imageDrop: true,
+            imageResize: {},
+            betterTable: true
+          }
+        }
+      }
+    }
   }
-}
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
